@@ -10,50 +10,63 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: ListView.builder(
-        itemBuilder: (ctx, index) {
-          return Card(
-            child: Row(
+      child: transaction.isEmpty
+          ? Column(
               children: [
-                Container(
-                  child: Text(
-                    '\$${transaction[index].amount.toStringAsPrecision(2)}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                    width: 4,
-                    color: Theme.of(context).primaryColorDark,
-                  )),
-                  padding: EdgeInsets.all(10),
+                Text(
+                  'No transaction added yet!',
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
                 ),
-                Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      transaction[index].title,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      DateFormat.yMMMd().format(transaction[index].date),
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
+                SizedBox(height: 10,),
+                Container(height: 200,child: Image.asset('assets/waiting.jpg',fit: BoxFit.cover,)),
               ],
+            )
+          : ListView.builder(
+              itemBuilder: (ctx, index) {
+                return Card(
+                  child: Row(
+                    children: [
+                      Container(
+                        child: Text(
+                          '\$${transaction[index].amount.toStringAsPrecision(2)}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        margin:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                          width: 4,
+                          color: Theme.of(context).primaryColorDark,
+                        )),
+                        padding: EdgeInsets.all(10),
+                      ),
+                      Column(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            transaction[index].title,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            DateFormat.yMMMd().format(transaction[index].date),
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+              itemCount: transaction.length,
             ),
-          );
-        },
-        itemCount: transaction.length,
-      ),
     );
   }
 }

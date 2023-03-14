@@ -32,10 +32,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   final List<Transaction> _userTrasaction = [
-    Transaction(
-        id: 't1', title: 'New Shoes', amount: 69.55, date: DateTime.now()),
-    Transaction(
-        id: 't2', title: 'New Pant', amount: 50.88, date: DateTime.now()),
+    // Transaction(
+    //     id: 't1', title: 'New Shoes', amount: 69.55, date: DateTime.now()),
+    // Transaction(
+    //     id: 't2', title: 'New Pant', amount: 50.88, date: DateTime.now()),
   ];
 
   void _addNewTransaction(String title, double amount) {
@@ -74,13 +74,14 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              child: Card(
-                elevation: 10,
-                child: Text('chart'),
-              ),
-            ),
+            // Container(
+            //   width: double.infinity,
+            //   child: Card(
+            //     color: Colors.tealAccent,
+            //     elevation: 2,
+            //     child: Text('chart',style: TextStyle(fontSize: 30),),
+            //   ),
+            // ),
             TransactionList(_userTrasaction),
           ],
         ),
