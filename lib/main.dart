@@ -31,19 +31,38 @@ class MyApp extends StatelessWidget {
               ),
             ),
             Column(
+
               children: trasnsaction.map((tx) {
                 return Card(
                   child: Row(
                     children: [
                       Container(
                         child: Text(
-                          tx.amount.toString(),
+                          '\$${tx.amount}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.deepPurple
+                          ),
                         ),
+                        margin: EdgeInsets.symmetric(
+                          vertical: 10,horizontal: 15
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 10,
+                            color: Colors.red,
+                          )
+                        ),
+                        padding: EdgeInsets.all(10),
                       ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(tx.title),
-                          Text(tx.date.toString()),
+                          Text(tx.title,style: TextStyle(fontWeight: FontWeight.bold),),
+                          Text(tx.date.toString(),style: TextStyle(
+                            color: Colors.grey,
+                          ),),
                         ],
                       ),
                     ],
