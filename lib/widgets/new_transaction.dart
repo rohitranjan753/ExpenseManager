@@ -14,17 +14,28 @@ class _NewTransactionState extends State<NewTransaction> {
 
   final amountController = TextEditingController();
 
-  void submitData(){
+  void _submitData() {
     final enteredTitle = titleController.text;
     final enteredAmount = double.parse(amountController.text);
 
-    if(enteredTitle.isEmpty || enteredAmount <=0){
-      return ;
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+      return;
     }
     widget.addTx(
-        titleController.text, double.parse(amountController.text),);
+      titleController.text,
+      double.parse(amountController.text),
+    );
 
     Navigator.of(context).pop();
+  }
+
+  void _presentDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime.now(),
+    );
   }
 
   @override
@@ -39,7 +50,7 @@ class _NewTransactionState extends State<NewTransaction> {
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
               controller: titleController,
-              onSubmitted: (_) => submitData(),
+              onSubmitted: (_) => _submitData(),
               // onChanged: (val) {
               //   titleInput = val;
               // },
@@ -48,14 +59,32 @@ class _NewTransactionState extends State<NewTransaction> {
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
               keyboardType: TextInputType.number,
-              onSubmitted: (_) => submitData(),
+              onSubmitted: (_) => _submitData(),
               // onChanged: (val) {
               //   amountInput = val;
               // },
             ),
-            TextButton(
-              onPressed: submitData,
-              child: Text('Add Transaction'),
+            Container(
+              height: 70,
+              child: Row(
+                children: [
+                  Text('No Date Chosen!'),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Choose Date',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ElevatedButton(
+              onPressed: _submitData,
+              child: Text(
+                'Add Transaction',
+                style: TextStyle(color: Colors.white),
+              ),
             )
           ],
         ),
