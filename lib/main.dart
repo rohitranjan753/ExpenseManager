@@ -4,6 +4,8 @@ import 'package:expensemanager/widgets/new_transaction.dart';
 import 'package:expensemanager/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 
+
+
 void main() {
   runApp(MyApp());
 }
@@ -79,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter App"),
+        title: Text("Expense Manager"),
         actions: [
           IconButton(
             onPressed: ()=> _startAddNewTransaction(context),
@@ -91,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             Chart(_recentTransactions),
-            Expanded(child: TransactionList(_userTrasaction,_deleteTransaction)),
+            TransactionList(_userTrasaction,_deleteTransaction),
             // Container(
             //   width: double.infinity,
             //   child: Card(
