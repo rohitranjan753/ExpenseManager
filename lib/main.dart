@@ -2,9 +2,8 @@ import 'package:expensemanager/models/transaction.dart';
 import 'package:expensemanager/widgets/chart.dart';
 import 'package:expensemanager/widgets/new_transaction.dart';
 import 'package:expensemanager/widgets/transaction_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-
 
 void main() {
   runApp(MyApp());
@@ -28,13 +27,11 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final List<Transaction> _userTrasaction = [
     // Transaction(
     //     id: 't1', title: 'New Shoes', amount: 69.55, date: DateTime.now()),
@@ -42,13 +39,17 @@ class _MyHomePageState extends State<MyHomePage> {
     //     id: 't2', title: 'New Pant', amount: 50.88, date: DateTime.now()),
   ];
 
-  List<Transaction> get _recentTransactions{
+  List<Transaction> get _recentTransactions {
     return _userTrasaction.where((tx) {
-      return tx.date.isAfter(DateTime.now().subtract(Duration(days:7),),);
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
     }).toList();
   }
 
-  void _addNewTransaction(String title, double amount,DateTime chosenDate) {
+  void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final newTx = Transaction(
       title: title,
       amount: amount,
@@ -60,40 +61,52 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _deleteTransaction(String id){
+  void _deleteTransaction(String id) {
     setState(() {
-      _userTrasaction.removeWhere((tx){
+      _userTrasaction.removeWhere((tx) {
         return tx.id == id;
       });
     });
   }
 
-  void _startAddNewTransaction(BuildContext ctx){
-    showModalBottomSheet(context: ctx, builder: (_) {
-      return GestureDetector(onTap: (){
+  void _startAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+            onTap: () {},
+            behavior: HitTestBehavior.opaque,
+            child: NewTransaction(_addNewTransaction));
       },
-          behavior: HitTestBehavior.opaque,
-      child: NewTransaction(_addNewTransaction));
-    },);
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text("Expense Manager"),
+      actions: [
+        IconButton(
+          onPressed: () => _startAddNewTransaction(context),
+          icon: Icon(Icons.add),
+        ),
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Expense Manager"),
-        actions: [
-          IconButton(
-            onPressed: ()=> _startAddNewTransaction(context),
-            icon: Icon(Icons.add),
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Chart(_recentTransactions),
-            TransactionList(_userTrasaction,_deleteTransaction),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height - MediaQuery.of(context).padding.top) *
+                    0.4,
+                child: Chart(_recentTransactions)),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height - MediaQuery.of(context).padding.top) *
+                    0.6,
+                child: TransactionList(_userTrasaction, _deleteTransaction)),
             // Container(
             //   width: double.infinity,
             //   child: Card(
@@ -106,10 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(onPressed: () {
-            ()=> _startAddNewTransaction(context);
-      },
-      child: Icon(Icons.add),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          () => _startAddNewTransaction(context);
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
