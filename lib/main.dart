@@ -4,8 +4,11 @@ import 'package:expensemanager/widgets/new_transaction.dart';
 import 'package:expensemanager/widgets/transaction_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]);
   runApp(MyApp());
 }
 
@@ -100,12 +103,12 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
                 height: (MediaQuery.of(context).size.height -
                         appBar.preferredSize.height - MediaQuery.of(context).padding.top) *
-                    0.4,
+                    0.3,
                 child: Chart(_recentTransactions)),
             Container(
                 height: (MediaQuery.of(context).size.height -
                         appBar.preferredSize.height - MediaQuery.of(context).padding.top) *
-                    0.6,
+                    0.7,
                 child: TransactionList(_userTrasaction, _deleteTransaction)),
             // Container(
             //   width: double.infinity,
